@@ -10,7 +10,7 @@ load('../testsite/.git', function(err, git) {
   function gothead(err, commit) {
     console.log("head commit:"+commit.message());
     index(commit, git.find.bind(git), function(d) {
-        console.log("writer:", d);
-    });
+        console.log("writer:", d)
+    })
   }
 })

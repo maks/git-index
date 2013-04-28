@@ -23,11 +23,21 @@ function index(commit, find, write) {
           }
           idxEntry.path += data.stack.map(function(s) { return s.name}).join("/")
           idxEntry.mode = (data.stack.length > 0) ? data.stack[data.stack.length-1].mode : 16344;
-          write(idxEntry);
+          write(idxEntry)
       })
   
     
     // add entry to index, possibly updating an existing entry for that path
-    function add(path, sha1, type, lastmod) {
+    function add(path, hash, type, lastmod) {
+        write( { 
+            path : path,
+            hash : hash,
+            type : type,
+            lastmod : lastmod
+        })
+    }
+    
+    function remove(path) {
+        write({path : path, hash : null });
     }
 }
