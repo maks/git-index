@@ -3,7 +3,7 @@
 var load = require('git-fs-repo')
   , index = require('./index.js')
 
-load('../testsite/.git', function(err, git) {
+load('.git', function(err, git) {
   var head = git.ref('HEAD').hash
   git.find(head, gothead)
 
