@@ -15,14 +15,14 @@ function index(commit, find, write) {
     walk(find, commit)
       .on('data', function(data) {
           var idxEntry = {
-              path : '/',
+              path : '',
               hash : data.hash,
               type : data.type,
               mode: 0,
               lastmod : now 
           }
           idxEntry.path += data.stack.map(function(s) { return s.name}).join("/")
-          idxEntry.mode = (data.stack.length > 0) ? data.stack[data.stack.length-1].mode : 16344;
+          idxEntry.mode = (data.stack.length > 0) ? data.stack[data.stack.length-1].mode : 0;
           write(idxEntry)
       })
   
