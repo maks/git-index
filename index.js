@@ -2,13 +2,13 @@
 
 module.exports = index
 
-var storage = {}
-
 /**
  * IN-MEMORY git index 
  * WILL NOT PERSIST !
  */
 function index () {
+
+    var storage = {}
         
     /**
      * Add entry into index in form of an object with properties:
