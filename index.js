@@ -1,43 +1,38 @@
 /*jshint laxcomma:true, asi:true */
 
-module.exports = index;
+module.exports = index
 
-var walk = require('git-walk-tree')
+var storage = {}
 
 /**
- * write - callback function to store entries in the index, it will be called for each entry to 
- *         be written into the git index. It receives a single argument a object with properties:
- *           path{String}, hash{Buffer}, type {Number}, mode, lastmod {Date}
- *  
+ * IN-MEMORY git index 
+ * WILL NOT PERSIST !
  */
-function index(commit, find, write) {
-    var now = new Date()
-    walk(find, commit)
-      .on('data', function(data) {
-          var idxEntry = {
-              path : '',
-              hash : data.hash,
-              type : data.type,
-              mode: 0,
-              lastmod : now 
-          }
-          idxEntry.path += data.stack.map(function(s) { return s.name}).join("/")
-          idxEntry.mode = (data.stack.length > 0) ? data.stack[data.stack.length-1].mode : 0;
-          write(idxEntry)
-      })
-  
-    
-    // add entry to index, possibly updating an existing entry for that path
-    function add(path, hash, type, lastmod) {
-        write( { 
-            path : path,
-            hash : hash,
-            type : type,
-            lastmod : lastmod
-        })
+function index () {
+        
+    /**
+     * Add entry into index in form of an object with properties:
+     * path, hash, type, lastmod
+     *
+     */
+    function add(data) {
+        if (data.hash === null) {
+            delete storage[data.path] 
+        } else {
+            storage[data.path] = data;
+            delete storage[data.path].path
+        }
     }
     
     function remove(path) {
         write({path : path, hash : null });
+    }
+    
+    function diff(path, modtime) {
+        return (storage[path].lastmod.getTime() != modtime)
+    }
+    
+    function read(path) {
+        return storage[path]
     }
 }

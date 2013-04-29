@@ -1,13 +1,13 @@
 # git-index
 
-Given a commit object, a find function and a write function, write out a git index.
+A git index
 
 
 ```javascript
 
 var load = require('git-fs-repo')
   , index = require('./index.js')
-  , memIndex = require('./mem-index.js')
+  , init = require('git-init-index')
 
 load('../testsite/.git', function(err, git) {
   var head = git.ref('HEAD').hash
@@ -15,7 +15,7 @@ load('../testsite/.git', function(err, git) {
 
   function gothead(err, commit) {
     console.log("head commit:"+commit.message());
-    index(commit, git.find.bind(git), memIndex.write)
+    init(commit, git.find.bind(git), index.add)
   }
 })
 ```
