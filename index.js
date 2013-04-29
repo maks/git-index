@@ -1,12 +1,12 @@
 /*jshint laxcomma:true, asi:true */
 
-module.exports = index
+module.exports = memindex
 
 /**
  * IN-MEMORY git index 
  * WILL NOT PERSIST !
  */
-function index () {
+function memindex () {
 
     var storage = {}
         

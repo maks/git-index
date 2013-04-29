@@ -1,14 +1,14 @@
 {
-  "name": "git-index",
+  "name": "git-mem-index",
   "version": "0.0.1",
-  "description": "manage a git index",
+  "description": "a in-memory git index",
   "main": "index.js",
   "scripts": {
     "test": "node test.js"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/maks/git-index.git"
+    "url": "git://github.com/maks/git-mem-index.git"
   },
   "keywords": [
     "git",
@@ -17,7 +17,6 @@
   "author": "Maksim Lin <maks@manichord.com>",
   "license": "MIT",
   "readmeFilename": "Readme.md",
-  "dependencies": {
-    "git-walk-tree": "*"
+  "dependencies": {    
   }
 }
