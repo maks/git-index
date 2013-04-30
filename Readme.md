@@ -1,6 +1,6 @@
-# git-mem-index
+# git-index
 
-A git index in memory
+A git index (aka dir cache)
 
 
 ```javascript
@@ -9,7 +9,7 @@ var load = require('git-fs-repo')
   , index = require('./index.js')
   , init = require('git-init-index')
 
-load('../testsite/.git', function(err, git) {
+load('.git', function(err, git) {
   var head = git.ref('HEAD').hash
   git.find(head, gothead)
 

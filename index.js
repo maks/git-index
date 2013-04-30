@@ -1,38 +1,36 @@
 /*jshint laxcomma:true, asi:true */
 
-module.exports = memindex
+module.exports = index
 
 /**
- * IN-MEMORY git index 
- * WILL NOT PERSIST !
+ * IN-MEMORY git index, pass in a writer function
+ * if you want to persist the index somewhere
+ * The write function will be passed a object param
+ * with the contents of the index
  */
-function memindex () {
+function index(write) {
 
-    var storage = {}
+    var entries = {}
         
     /**
      * Add entry into index in form of an object with properties:
      * path, hash, type, lastmod
      *
      */
-    function add(data) {
-        if (data.hash === null) {
-            delete storage[data.path] 
-        } else {
-            storage[data.path] = data;
-            delete storage[data.path].path
-        }
+    function add(entry) {
+        entries[entry.path] = entry;
+        write(entries);
     }
     
     function remove(path) {
-        write({path : path, hash : null });
+        delete entries[path] 
     }
     
     function diff(path, modtime) {
-        return (storage[path].lastmod.getTime() != modtime)
+        return (entries[path].lastmod.getTime() != modtime)
     }
     
     function read(path) {
-        return storage[path]
+        return entries[path]
     }
 }
