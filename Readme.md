@@ -22,6 +22,15 @@ load('.git', function(err, git) {
 
 ## API
 
+#### index(write)
+
+persist the index by passing in a write function that will be called
+each time a change is made to the index.
+the write fucntion will be passed the entire contents of index as a object
+with the path of each index entry as propeties on the object and the values
+being objects in the form of:
+
+
 #### index.add({path, sha1, type, lastmod})
 
 Add a git object (blob/tree/tag)
