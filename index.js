@@ -10,27 +10,34 @@ module.exports = index
  */
 function index(write) {
 
-    var entries = {}
-        
+    function GitIndex() {
+        this._entries = {};
+    }
     /**
      * Add entry into index in form of an object with properties:
      * path, hash, type, lastmod
      *
      */
-    function add(entry) {
-        entries[entry.path] = entry;
-        write(entries);
+        
+    GitIndex.prototype.add = function (entry) {
+        if (entry.path) {
+            entry.hash = entry.hash.toString('hex')
+            console.log("add2index:"+JSON.stringify(entry));
+            this._entries[entry.path] = entry
+            write(this._entries)
+        }
     }
     
-    function remove(path) {
-        delete entries[path] 
+    GitIndex.prototype.remove = function (path) {
+        delete this._entries[path] 
     }
     
-    function diff(path, modtime) {
-        return (entries[path].lastmod.getTime() != modtime)
+    GitIndex.prototype.diff = function (path, modtime) {
+        return (this._entries[path].lastmod.getTime() != modtime);
     }
     
-    function read(path) {
-        return entries[path]
+    GitIndex.prototype.read = function (path) {
+        return this._entries[path]
     }
+    return new GitIndex();
 }
